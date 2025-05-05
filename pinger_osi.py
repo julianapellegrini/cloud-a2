@@ -78,38 +78,24 @@ def pinger(ip_address):
         result['status'] = 'Unreachable'
         # determine failure reason, relate to OSI, and suggest solutions
         if "Request timed out" in e.stdout:
-            result['error_type'] = "Timeout"
-            result['osi_layer'] = "Layer 3 (Network)"
-            result['solution'] = ("This error means there was no connection to the end host in the expected time."
-                                  "You could 1. Check the network connection 2. Check the firewall settings "
-                                  "3. traceroute the path to the host 4. Check if the host is up. \n")
+            result['error_type'] = "Request timed out"
 
         elif "Destination host unreachable" in e.stdout:
-            result['error_type'] = "Network routing failure"
-            result['osi_layer'] = "Layer 3 (Network)"
-            result['solution'] = "1. Check subnet mask/gateway\n2. Run 'ipconfig /flushdns'"
+            result['error_type'] = "Destination host unreachable"
 
         elif "Ping request could not find host" in e.stdout:
-            result['error_type'] = "DNS resolution failed"
-            result['osi_layer'] = "Layer 7 (Application)"
-            result['solution'] = "Check DNS server settings"
+            result['error_type'] = "Ping request could not find host"
 
         else:
             result['error_type'] = f"Unknown error (Code: {e.returncode})"
-            result['osi_layer'] = "N/A"
-            result['solution'] = "Check command syntax and permissions"
 
     except ValueError as ve:
         result['status'] = 'Invalid'
         result['error_type'] = f"Invalid IP format: {str(ve)}"
-        result['osi_layer'] = "Layer 7 (Application)"
-        result['solution'] = "Verify IP/hostname follows standards\n(Example: 192.168.1.1 or google.com)"
 
     except Exception as e:
         result['status'] = 'Error'
         result['error_type'] = f"System error: {str(e)}"
-        result['osi_layer'] = "N/A"
-        result['solution'] = "1. Check Python environment\n2. Verify command permissions"
 
     return result
 
@@ -139,8 +125,6 @@ def write_log(results_list):
                 f.write(f"TTL: {res['ttl']}\n")
             else:
                 f.write(f"Error Type: {res['error_type']}\n")
-                f.write(f"Suggested Solution: {res['solution']}\n")
-                f.write(f"OSI Layer Related to the Error: {res['osi_layer']}\n")
 
             f.write("-" * 40 + "\n")
 
@@ -181,4 +165,8 @@ if __name__ == "__main__":
 
     print("\nReport saved to ping_log.txt")
     print("=" * 60)
+
+    # TO DO
+    # if there were unreachable or errors ask if they want to go further
+
     print("Thank you for using our ping tool!")
