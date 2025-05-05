@@ -5,11 +5,11 @@ import os # we will use it to check if the log file already exists and store a b
 
 
 # List of IP addresses to ping
-ip_lst = ['127.0.0.1', '8.8.8.8', '124.654.324.6', 'google.com', 'nonexistent.domain']
+ip_lst = ['127.0.0.1', '8.8.8.8', '124.33.24.6', 'google.com', 'nonexistent.domain']
 
 print("Welcome to our ping tool!")
 print("This tool will ping a list of IP addresses and log the results.")
-print("Default list of IP addresses: 127.0.0.1', '8.8.8.8', '124.654.324.6', 'google.com', 'nonexistent.domain")
+print("Default list of IP addresses: 127.0.0.1', '8.8.8.8', '124.33.24.6', 'google.com', 'nonexistent.domain")
 print("Would you like to use our default list of IP addresses? (y/n)")
 
 inp = input("Enter your choice: ").strip().lower()
@@ -18,7 +18,7 @@ while inp not in ['y', 'n']:
 if inp == 'y':
     # use the default list of IP addresses
     print("Using default list of IP addresses.")
-    ip_lst = ['127.0.0.1', '8.8.8.8', '124.654.324.6', 'google.com', 'nonexistent.domain']
+    ip_lst = ['127.0.0.1', '8.8.8.8', '124.33.24.6', 'google.com', 'nonexistent.domain']
 elif inp == 'n':
     ip_lst = []
     print("Please enter the IP addresses you want to ping, one by one.")
