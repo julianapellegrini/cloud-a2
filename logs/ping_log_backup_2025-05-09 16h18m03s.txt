@@ -1,0 +1,37 @@
+Ping Report
+========================================
+Created: 2025-05-09 16h18m03s
+
+----------------------------------------
+
+Target: 127.0.0.1
+Status: Reachable
+Timestamp: 2025-05-09 16:17:35
+Average Trip Time: 0ms
+Packet Loss Percentage: 0%
+TTL: 128
+----------------------------------------
+Target: 8.8.8.8
+Status: Reachable
+Timestamp: 2025-05-09 16:17:38
+Average Trip Time: 9ms
+Packet Loss Percentage: 0%
+TTL: 116
+----------------------------------------
+Target: 124.33.24.6
+Status: Unreachable
+Timestamp: 2025-05-09 16:17:41
+Error Type: Request timed out
+----------------------------------------
+Target: google.com
+Status: Reachable
+Timestamp: 2025-05-09 16:18:00
+Average Trip Time: 10ms
+Packet Loss Percentage: 0%
+TTL: 116
+----------------------------------------
+Target: nonexistent.domain
+Status: Unreachable
+Timestamp: 2025-05-09 16:18:03
+Error Type: Ping request could not find host
+----------------------------------------
