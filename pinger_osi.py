@@ -2,14 +2,10 @@ import subprocess as sp # we will use it to run commands
 import re # we will use it to analyse the output and search for what we want
 import datetime # we will use it to get the time of the ping and report
 import os # we will use it to check if the log file already exists and store a backup if it does
-
-
-# List of IP addresses to ping
-ip_lst = ['127.0.0.1', '8.8.8.8', '124.33.24.6', 'google.com', 'nonexistent.domain']
+import utility
 
 print("Welcome to our ping tool!")
-print("This tool will ping a list of IP addresses and log the results.")
-print("Default list of IP addresses: 127.0.0.1', '8.8.8.8', '124.33.24.6', 'google.com', 'nonexistent.domain")
+print("This tool will ping a list of addresses and log the results.")
 print("Would you like to use our default list of IP addresses? (y/n)")
 
 inp = input("Enter your choice: ").strip().lower()
@@ -18,7 +14,7 @@ while inp not in ['y', 'n']:
 if inp == 'y':
     # use the default list of IP addresses
     print("Using default list of IP addresses.")
-    ip_lst = ['127.0.0.1', '8.8.8.8', '124.33.24.6', 'google.com', 'nonexistent.domain']
+
 elif inp == 'n':
     ip_lst = []
     print("Please enter the IP addresses you want to ping, one by one.")
@@ -28,9 +24,7 @@ elif inp == 'n':
         # check if the user typed 'done' to finish
         if ip.lower() == 'done':
             break
-        # check if the input is valid with regex
-        if not (re.match(r'^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])$', ip) or # IPv4
-                re.match(r'^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', ip)): # domain name
+        if not utility.is_valid_ip(ip): # domain name
             print("Invalid address format. Please try again.")
             continue
         ip_lst.append(ip)
@@ -103,12 +97,12 @@ def pinger(ip_address):
 def write_log(results_list):
 
     # check if log file already exists and create backup if it does
-    if os.path.exists('ping_log.txt'):
+    if os.path.exists('logs/ping_log.txt'):
         backup_name = f"ping_log_backup_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
         os.rename('ping_log.txt', backup_name)
 
     # write a log file with the information of the ping organized
-    with open('ping_log.txt', 'w') as f:
+    with open('./logs/ping_log.txt', 'w') as f:
         f.write("Ping Report\n")
         f.write("=" * 40 + "\n")
         f.write(f"Created: {datetime.datetime.now()}\n\n")
