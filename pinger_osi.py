@@ -166,7 +166,4 @@ if __name__ == "__main__":
     print("\nReport saved to ping_log.txt")
     print("=" * 60)
 
-    # TO DO
-    # if there were unreachable or errors ask if they want to go further
-
     print("Thank you for using our ping tool!")
