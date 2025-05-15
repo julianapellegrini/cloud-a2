@@ -96,7 +96,7 @@ def write_log(results_list: list[list[str]]) -> str:
     """
     # Generating log file name
     creation_time = datetime.datetime.now().strftime("%Y-%m-%d %Hh%Mm%Ss")
-    log_file_name = f"ping_log_backup_{creation_time}.txt"
+    log_file_name = f"ping_log {creation_time}.txt"
 
     # Writing info to the log file
     with open(log_file_name, 'w') as f:
@@ -118,7 +118,7 @@ def write_log(results_list: list[list[str]]) -> str:
                 f.write(f"Error Type: {res['error_type']}\n")
 
             f.write("-" * 40 + "\n")
-        return "logs/" + log_file_name
+        return log_file_name
 
 # ===============
 # MAIN (if utility is running for some reason)
