@@ -1,5 +1,3 @@
-import ipaddress  # for ip validation
-import socket  # for dns validation and resolution
 import subprocess as sp  # we will use it to run commands
 import re  # we will use it to analyse the output and search for what we want
 import datetime  # we will use it to get the time of the ping and report
@@ -26,38 +24,6 @@ ping_result_template = {
 # ========================
 # UTILITY FUNCTIONS
 # ========================
-
-def is_valid_ip(ip: str) -> bool:
-    """
-    Function to check if an IP address is a valid IPv4 or IPv6 address.
-    :param ip: input IPv4 or IPv6 address
-    :return: True or False depending on if the IP address is valid
-    """
-    try:
-        ipaddress.ip_address(ip)
-        return True
-    except ValueError:
-        return False
-
-def version_of_ip(ip: str) -> str:
-    """
-    Function that returns the version number of the IP address.
-    :param ip: input IPv4 or IPv6 address
-    :return: IP version number (4 or 6)
-    """
-    return str(ipaddress.ip_address(ip).version)
-
-def resolve_name(name):
-    """
-    Resolve DNS name to IP address.
-    :param name: input DNS name
-    :return: ipv4 address of the host
-    """
-    try:
-        ip = socket.gethostbyname(name)
-        return ip
-    except socket.gaierror:
-        return None
 
 def pinger(ip_address: str) -> dict[str, str]:
     """
@@ -117,59 +83,6 @@ def pinger(ip_address: str) -> dict[str, str]:
         result['error_type'] = f"System error: {str(e)}"
 
     return result
-
-# ========================
-# USER INTERFACE FUNCTIONS
-# ========================
-
-def validate_list_of_ips(ips: list[str]) -> list[bool]:
-    """
-    Function to check validity of a list of IP addresses.
-    :param ips: input list of IP addresses
-    :return: list of boolean indicating if the IP addresses are valid
-    """
-    return [is_valid_ip(ip) for ip in ips]
-
-def request_list_of_addresses() -> list[str]:
-    """
-    Function to request a list of addresses from the user.
-    :return: list of addresses
-    """
-    amount_of_addresses = int(input("How many IP addresses do you want to check? "))
-    addresses = []
-    address_num = 1
-    while address_num <= amount_of_addresses:
-        current_address = input(f"Enter IP address #{address_num}:\t")
-        # Checking if address is valid
-        if is_valid_ip(resolve_name(current_address)):
-            addresses.append(current_address)
-            address_num += 1
-        else:
-            print("Invalid IP address; Try again.")
-            continue
-    # Introspect the list for user
-    print("\n Your list of IP addresses is:")
-    for num, address in enumerate(addresses):
-        print(num + 1, ":\t", address)
-    return addresses
-
-def yes_or_no_students() -> bool | None:
-    """
-    Function to ask if a user confirmed yes or no. Works slow without Maestro
-    :return: True for Yes, False for No
-    """
-    while True:
-        answer = input("Please answer with yes or no (y/n):\t")
-        if answer.lower() in ['y', 'yes']:
-            return True
-            break
-        elif answer.lower() in ['n', 'no']:
-            return False
-            break
-        else:
-            print("Invalid answer. Try again.")
-            continue
-    return None
 
 # ===============
 # LOG MANAGEMENT FUNCTIONS

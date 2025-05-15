@@ -2,28 +2,24 @@ import utility
 
 # RUNNING CLI
 if __name__ == "__main__":
+
     # Initial prompting
     print("Welcome to our ping tool!")
-    print("This tool will ping a list of addresses and log the results.")
-    print("Would you like to use our default list of IP addresses?")
-
-    # Choosing whether pinging default list of addresses or custom one
-    if utility.yes_or_no_students() is True:
-        ip_lst = utility.default_set_of_addresses
-    else:
-        ip_lst = utility.request_list_of_addresses()
+    print("This tool will ping following list of addresses and log the results.")
+    for number, ip in enumerate(utility.default_set_of_addresses):
+        print(f"{number + 1} - {ip}")
 
     # list to store the results of each ping
     results = []
 
-    # ping each IP address in the list
-    print("Let's start pinging!\n")
-    for ip in ip_lst:
-        print(f"Pinging {ip}...")
+    # ping each address in the list
+    print("Let's start pinging!")
+    for ip in utility.default_set_of_addresses:
+        print(f"\nPinging {ip}...")
         ip_result = utility.pinger(ip)
         results.append(ip_result)
 
-        # print summary for the current result so the user can keep track of the process
+        # print the summary for the current result so the user can keep track of the process
         print(f"\nPinged: {ip_result['ip']}")
         print(f"Status: {ip_result['status']}")
         if ip_result['status'] == 'Reachable':
