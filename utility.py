@@ -179,14 +179,14 @@ def write_log(results_list: list[list[str]]) -> str:
     """
     Creating and formatting of log file
     :param results_list: Nested list of results for each ping
-    :return: None (log created with date and formating in the 'logs' folder)
+    :return: None (log created with date and formating in the 'logs')
     """
     # Generating log file name
     creation_time = datetime.datetime.now().strftime("%Y-%m-%d %Hh%Mm%Ss")
     log_file_name = f"ping_log_backup_{creation_time}.txt"
 
     # Writing info to the log file
-    with open('./logs/' + log_file_name, 'w') as f:
+    with open(log_file_name, 'w') as f:
         f.write("Ping Report\n")
         f.write("=" * 40 + "\n")
         f.write(f"Created: {creation_time}\n\n")
